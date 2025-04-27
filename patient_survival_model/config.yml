@@ -1,0 +1,35 @@
+# Data Files
+training_data_file: heart_failure_clinical_records_dataset.csv
+# test_data_file: test.csv
+
+# Variables
+# The variable we are attempting to predict (Survival)
+target: DEATH_EVENT
+
+pipeline_name: patient_survival_model
+pipeline_save_file: patient_survival_model_output_v
+
+features:      # final features to be use
+  - age
+  - anaemia
+  - high_blood_pressure
+  - creatinine_phosphokinase
+  - diabetes
+  - ejection_fraction
+  - platelets
+  - sex
+  - serum_creatinine
+  - serum_sodium
+  - smoking
+  - time
+
+  
+# set train/test split
+test_size: 0.30
+
+# to set the random seed
+random_state: 42
+# alogrithm parameters
+n_estimators: 200
+max_depth: 4
+max_leaves: 5
