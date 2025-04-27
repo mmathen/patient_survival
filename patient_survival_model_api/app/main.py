@@ -11,35 +11,36 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.wsgi import WSGIMiddleware
 from fastapi.responses import HTMLResponse
 import gradio as gr
+import pandas as pd
 
-from app.api import api_router
-from app.config import settings
+# from app.api import api_router
+# from app.config import settings
 #from patient_survival_model import make_prediction
 from patient_survival_model import __version__ as model_version
 from patient_survival_model.predict import make_prediction
 
 app = FastAPI(
-    title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
+    #title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
-root_router = APIRouter()
+# root_router = APIRouter()
 
 
-@root_router.get("/")
-def index(request: Request) -> Any:
-    """Basic HTML response."""
-    body = (
-        "<html>"
-        "<body style='padding: 10px;'>"
-        "<h1>Welcome to the API</h1>"
-        "<div>"
-        "Check the docs: <a href='/docs'>here</a>"
-        "</div>"
-        "</body>"
-        "</html>"
-    )
+# @root_router.get("/")
+# def index(request: Request) -> Any:
+#     """Basic HTML response."""
+#     body = (
+#         "<html>"
+#         "<body style='padding: 10px;'>"
+#         "<h1>Welcome to the API</h1>"
+#         "<div>"
+#         "Check the docs: <a href='/docs'>here</a>"
+#         "</div>"
+#         "</body>"
+#         "</html>"
+#     )
 
-    return HTMLResponse(content=body)
+#     return HTMLResponse(content=body)
 
 title = "Patient Survival Prediction"
 description = "Predict survival of patient with heart failure, given their clinical record"
@@ -96,18 +97,18 @@ gradio_app = gr.Interface(
 # Mount gradio interface object on FastAPI app at endpoint = '/'
 app = gr.mount_gradio_app(app, gradio_app, path="/")
 
-app.include_router(api_router, prefix=settings.API_V1_STR)
-app.include_router(root_router)
+# app.include_router(api_router, prefix=settings.API_V1_STR)
+# app.include_router(root_router)
 
 # Set all CORS enabled origins
-if settings.BACKEND_CORS_ORIGINS:
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
+# if settings.BACKEND_CORS_ORIGINS:
+#     app.add_middleware(
+#         CORSMiddleware,
+#         allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
+#         allow_credentials=True,
+#         allow_methods=["*"],
+#         allow_headers=["*"],
+#     )
 
 
 if __name__ == "__main__":
